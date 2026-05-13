@@ -1,3 +1,4 @@
+import argparse
 import lief
 import numpy as np
 import sys
@@ -760,6 +761,16 @@ class BPFProg():
         builder.write(path)
 
 
+def parse_args():
+    parser = argparse.ArgumentParser('Merlin optimizer')
+    parser.add_argument('input_file', help='Path to the eBPF binary')
+    parser.add_argument('-o', '--output', default='a.bpf.out', help='output binary')
+    args = parser.parse_args()
+    return args
+
 if __name__ == '__main__':
-    prog = BPFProg('test.o')
-    prog.save('test_optimized.o')
+    args = parse_args()
+    prog = BPFProg(args.input_file)
+    prog.save(args.output)
+
+
